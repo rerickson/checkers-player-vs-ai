@@ -1,4 +1,5 @@
 import pygame
+from checker import Checker
 
 class Board:
     def __init__(self):
@@ -19,5 +20,5 @@ class Board:
             else:
                 self.board[row].append(0)
 
-                
+
 

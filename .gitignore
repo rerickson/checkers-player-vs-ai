@@ -1,0 +1,29 @@
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# Logs
+*.log
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Dependency directories
+venv/
+env/
+envs/
+env36/
+venv36/
+env37/
+venv37/
+env38/
+venv38/
+env39/
+venv39/
+env3/
+venv3/
+pip/
+pipenv/
+lib/
+lib64/
