@@ -17,6 +17,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                game.mouse_click_handler()
+                # pos = pygame.mouse.get_pos()
+                # row, col = get_row_col_from_mouse(pos)
+                # game.select(row, col)
 
         game.update()
         

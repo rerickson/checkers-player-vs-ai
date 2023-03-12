@@ -40,3 +40,12 @@ class Board:
                 checker = self.board[row][col]
                 if checker != 0:
                     checker.draw(win)
+    
+    def get_row_col_from_position(self, pos):
+        x, y = pos
+        row = y // SQUARE_SIZE
+        col = x // SQUARE_SIZE
+        return row, col
+    
+    def get_checker(self, row, col):
+        return self.board[row][col]
