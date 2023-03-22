@@ -49,3 +49,11 @@ class Board:
     
     def get_checker(self, row, col):
         return self.board[row][col]
+
+    def move(self, checker, row, col):
+        self.board[checker.row][checker.col] = 0 # clear out the old space
+        self.board[row][col] = checker # Set the piece to the new location
+        
+        # If we moved to a top or bottom row then make the checker a king
+        if row == self.rows - 1 or row == 0:
+            checker.make_king()

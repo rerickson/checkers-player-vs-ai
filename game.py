@@ -8,8 +8,8 @@ class Game:
         self.board = Board()
         self.turn = 1
         self.window = win
-        self.player1 = Player(self.board, win)
-        self.player2 = Player(self.board, win)
+        self.player1 = Player(self.board, win, self)
+        self.player2 = Player(self.board, win, self)
         self.player1.turn_started()
     
     def change_turn(self):
@@ -35,3 +35,13 @@ class Game:
         checker = self.board.get_checker(row, col)
         # if(checker != 0 and checker.player_number == self.turn):
         current_player.click_checker(checker, row, col)
+    
+    def move(self, checker, row, col):
+        # update the board
+        self.board.move(checker, row, col)
+
+        # update the checker
+        checker.move(row, col)
+
+        # once a move is made it changes turns
+        self.change_turn()

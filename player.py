@@ -2,12 +2,13 @@ import pygame
 from board import Board, SQUARE_SIZE
 
 class Player:
-    def __init__(self, board, win):
+    def __init__(self, board, win, game): # todo move board and window logic out of here
         self.is_turn = False
         self.board = board
         self.selected = None
         self.valid_moves = {}
         self.win = win
+        self.game = game
 
     def click_checker(self, checker, row, col):
         if(self.selected and checker == 0):
@@ -18,14 +19,9 @@ class Player:
         self.valid_moves = self.get_valid_moves(checker)
         
     def _move(self, row, col):
-        return
-        # checker = self.board.get_checker(row, col)
-        # if self.selected and checker == 0 and (row, col) in self.valid_moves:
-        #     # self.board.move(self.selected, row, col)
-        #     skipped = self.valid_moves[(row, col)]
-        #     if skipped:
-        #         self.board.remove(skipped)
-        #     self.change_turn()
+        # todo when we break UI logic to a new class we can move the piece and be done. The game will re-draw after each cycle
+        if self.selected and (row, col) in self.valid_moves:
+            self.game.move(self.selected, row, col)
 
     
     def get_valid_moves(self, checker):
