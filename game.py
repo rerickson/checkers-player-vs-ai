@@ -33,8 +33,8 @@ class Game:
             current_player = self.player2
 
         checker = self.board.get_checker(row, col)
-        # if(checker != 0 and checker.player_number == self.turn):
-        current_player.click_checker(checker, row, col)
+        if(checker == 0 or checker.player_number == self.turn):
+            current_player.click_checker(checker, row, col)
     
     def move(self, checker, row, col):
         # update the board

@@ -8,7 +8,7 @@ SQUARE_SIZE = 100
 class Board:
     def __init__(self):
         self.board = []
-        self.player1_pieces_total = player2_pieces_total = 12
+        self.player1_pieces_total = self.player2_pieces_total = 12
         self.rows = self.columns = 8
         for row in range(self.rows):
             self.board.append([])
@@ -57,3 +57,15 @@ class Board:
         # If we moved to a top or bottom row then make the checker a king
         if row == self.rows - 1 or row == 0:
             checker.make_king()
+
+    def remove(self, checkers):
+        if not checkers:
+            return
+        
+        for checker in checkers:
+            self.board[checker.row][checker.col] = 0
+            if checker != 0:
+                if checker.player_number == 1:
+                    self.player1_pieces_total -= 1
+                else:
+                    self.player2_pieces_total -= 1

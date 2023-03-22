@@ -22,6 +22,9 @@ class Player:
         # todo when we break UI logic to a new class we can move the piece and be done. The game will re-draw after each cycle
         if self.selected and (row, col) in self.valid_moves:
             self.game.move(self.selected, row, col)
+            jumpedCheckers = self.valid_moves[(row, col)]
+            self.board.remove(jumpedCheckers)
+            self.valid_moves = {}
 
     
     def get_valid_moves(self, checker):
