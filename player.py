@@ -9,10 +9,24 @@ class Player:
         self.valid_moves = {}
         self.win = win
 
-    def click_checker(self, checker):
+    def click_checker(self, checker, row, col):
+        if(self.selected and checker == 0):
+            self._move(row, col)
+            return
+        
         self.selected = checker
         self.valid_moves = self.get_valid_moves(checker)
         
+    def _move(self, row, col):
+        return
+        # checker = self.board.get_checker(row, col)
+        # if self.selected and checker == 0 and (row, col) in self.valid_moves:
+        #     # self.board.move(self.selected, row, col)
+        #     skipped = self.valid_moves[(row, col)]
+        #     if skipped:
+        #         self.board.remove(skipped)
+        #     self.change_turn()
+
     
     def get_valid_moves(self, checker):
         moves = {}
@@ -72,7 +86,7 @@ class Player:
         
         return moves
 
-    def _traverse_right(self, start, stop, step, color, right, skipped=[]):
+    def _traverse_right(self, start, stop, step, player_number, right, skipped=[]):
         moves = {}
         last = []
         for r in range(start, stop, step):
@@ -93,10 +107,10 @@ class Player:
                         row = max(r-3, 0)
                     else:
                         row = min(r+3, self.board.rows)
-                    moves.update(self._traverse_left(r+step, row, step, color, right-1,skipped=last))
-                    moves.update(self._traverse_right(r+step, row, step, color, right+1,skipped=last))
+                    moves.update(self._traverse_left(r+step, row, step, player_number, right-1,skipped=last))
+                    moves.update(self._traverse_right(r+step, row, step, player_number, right+1,skipped=last))
                 break
-            elif current.color == color:
+            elif current.player_number == player_number:
                 break
             else:
                 last = [current]
