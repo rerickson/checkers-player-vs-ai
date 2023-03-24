@@ -10,6 +10,8 @@ class Board:
         self.board = []
         self.player1_pieces_total = self.player2_pieces_total = 12
         self.rows = self.columns = 8
+        self.complete = False
+
         for row in range(self.rows):
             self.board.append([])
             for col in range(self.columns):
@@ -69,3 +71,14 @@ class Board:
                     self.player1_pieces_total -= 1
                 else:
                     self.player2_pieces_total -= 1
+
+        winner = 0
+        if(self.player1_pieces_total <= 0):
+            winner = 1
+
+        if(self.player2_pieces_total <= 0):
+            winner = 2
+
+        if(winner != 0):
+            print("Congrats Player " + str(winner) + " you have won the game!")
+            self.complete = True
