@@ -1,24 +1,32 @@
-import pygame
-from board import Board, SQUARE_SIZE
+from __future__ import annotations
+from board import Board
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from checker import Checker
+    from game import Game
 
 class Player:
     def __init__(self, board, win, game): # todo move board and window logic out of here
         self.is_turn = False
-        self.board = board
-        self.selected = None
+        self.board: Board = board
+        self.selected: Checker = None
         self.valid_moves = {}
         self.win = win
-        self.game = game
+        self.game: Game = game
 
-    def click_checker(self, checker, row, col):
+    def click_checker(self, checker: Checker, row: int, col: int):
         if(self.selected and checker == 0):
             self._move(row, col)
+            return
+        
+        if(checker == 0):
             return
         
         self.selected = checker
         self.valid_moves = self.get_valid_moves(checker)
         
-    def _move(self, row, col):
+    def _move(self, row: int, col: int):
         # todo when we break UI logic to a new class we can move the piece and be done. The game will re-draw after each cycle
         if self.selected and (row, col) in self.valid_moves:
             self.game.move(self.selected, row, col)
@@ -27,7 +35,7 @@ class Player:
             self.valid_moves = {}
 
     
-    def get_valid_moves(self, checker):
+    def get_valid_moves(self, checker: Checker):
         moves = {}
         left = checker.col - 1
         right = checker.col + 1
@@ -42,11 +50,11 @@ class Player:
     
         return moves
 
-    def draw_handler(self):
-        moves = self.valid_moves
-        for move in moves:
-            row, col = move
-            pygame.draw.circle(self.win, (0, 0, 255), (col * SQUARE_SIZE + SQUARE_SIZE//2, row * SQUARE_SIZE + SQUARE_SIZE//2), 15)
+    # def draw_handler(self):
+    #     moves = self.valid_moves
+    #     for move in moves:
+    #         row, col = move
+    #         pygame.draw.circle(self.win, (0, 0, 255), (col * SQUARE_SIZE + SQUARE_SIZE//2, row * SQUARE_SIZE + SQUARE_SIZE//2), 15)
     
     def turn_started(self):
         self.is_turn = True
@@ -92,7 +100,7 @@ class Player:
             if right >= self.board.columns:
                 break
             
-            current = self.board.get_checker(r, right)
+            current: Checker = self.board.get_checker(r, right)
             if current == 0:
                 if skipped and not last:
                     break
