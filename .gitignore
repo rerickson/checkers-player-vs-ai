@@ -8,6 +8,7 @@ __pycache__/
 # IDE-specific files
 .vscode/
 .idea/
+todo.md
 
 # Dependency directories
 venv/
