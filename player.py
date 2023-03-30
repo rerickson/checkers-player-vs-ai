@@ -8,7 +8,6 @@ if TYPE_CHECKING:
 
 class Player:
     def __init__(self, board, win, game): # todo move board and window logic out of here
-        self.is_turn = False
         self.board: Board = board
         self.selected: Checker = None
         self.valid_moves = {}
@@ -27,7 +26,6 @@ class Player:
         self.valid_moves = self.get_valid_moves(checker)
         
     def _move(self, row: int, col: int):
-        # todo when we break UI logic to a new class we can move the piece and be done. The game will re-draw after each cycle
         if self.selected and (row, col) in self.valid_moves:
             self.game.move(self.selected, row, col)
             jumpedCheckers = self.valid_moves[(row, col)]
@@ -49,15 +47,9 @@ class Player:
             moves.update(self._traverse_right(row +1, min(row+3, self.board.rows), 1, checker.player_number, right))
     
         return moves
-
-    # def draw_handler(self):
-    #     moves = self.valid_moves
-    #     for move in moves:
-    #         row, col = move
-    #         pygame.draw.circle(self.win, (0, 0, 255), (col * SQUARE_SIZE + SQUARE_SIZE//2, row * SQUARE_SIZE + SQUARE_SIZE//2), 15)
     
-    def turn_started(self):
-        self.is_turn = True
+    def change_turn(self):
+        self.selected = None
 
 
     def _traverse_left(self, start, stop, step, player_number, left, skipped=[]):
@@ -67,7 +59,7 @@ class Player:
             if left < 0:
                 break
             
-            current = self.board.get_checker(r,left)
+            current: Checker = self.board.get_checker(r,left)
             if current == 0:
                 if skipped and not last:
                     break

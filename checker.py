@@ -1,13 +1,13 @@
 class Checker:
-    def __init__(self, row, col, player_number):
-        self.row = row
-        self.col = col
+    def __init__(self, row, col, player_number: int):
+        self.row: int = row
+        self.col: int = col
         self.king = False
         self.x = 0
         self.y = 0
         self.radius_base = 50
         self.radius_top = 40
-        self.player_number = player_number
+        self.player_number: int = player_number
         self.calc_center()
 
     # todo move this to UI
@@ -22,3 +22,6 @@ class Checker:
 
     def make_king(self):
         self.king = True
+
+    def get_player(self):
+        return self.player_number

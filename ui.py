@@ -24,13 +24,15 @@ class UI:
 
     def update(self):
         self.draw()
-        # self.player1.draw_handler()
-        # self.player2.draw_handler()
         pygame.display.update()
 
     def draw(self):
         self.draw_squares()
         self.draw_checkers()
+        if(self.game.current_player != None and self.game.current_player.selected != None):
+            valid_moves = self.game.current_player.get_valid_moves(self.game.current_player.selected)
+            self.draw_valid_moves(valid_moves)
+            self.draw_selected(self.game.current_player.selected)
 
     def draw_squares(self):
         self.screen.fill(BOARD_COLOR)
@@ -79,3 +81,11 @@ class UI:
         row = y // SQUARE_SIZE
         col = x // SQUARE_SIZE
         return row, col
+    
+    def draw_valid_moves(self, valid_moves):
+        for move in valid_moves:
+            row, col = move
+            pygame.draw.circle(self.screen, (0, 0, 255), (col * SQUARE_SIZE + SQUARE_SIZE//2, row * SQUARE_SIZE + SQUARE_SIZE//2), 15)
+
+    def draw_selected(self, checker: Checker):
+        pygame.draw.circle(self.screen, (0,255,0), (checker.x, checker.y), 50, 5)

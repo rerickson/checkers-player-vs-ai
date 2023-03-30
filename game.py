@@ -14,25 +14,29 @@ class Game:
         self.window = win
         self.player1 = Player(self.board, win, self)
         self.player2 = Player(self.board, win, self)
-        self.player1.turn_started()
+        self.current_player = self.player1
     
     def change_turn(self):
         if self.turn == 1:
+            self.player2.change_turn()
+            self.player1.change_turn()
             self.turn = 2
         else:
             self.turn = 1
+            self.player2.change_turn()
+            self.player1.change_turn()
 
     def mouse_click_handler(self, pos):
         row, col = pos
 
         if(self.turn == 1):
-            current_player = self.player1
+            self.current_player = self.player1
         else:
-            current_player = self.player2
+            self.current_player = self.player2
 
         checker: Checker = self.board.get_checker(row, col)
         if(checker == 0 or checker.player_number == self.turn):
-            current_player.click_checker(checker, row, col)
+            self.current_player.click_checker(checker, row, col)
     
     def move(self, checker: Checker, row: int, col: int):
         # update the board

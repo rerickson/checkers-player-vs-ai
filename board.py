@@ -3,9 +3,11 @@ from checker import Checker
 class Board:
     def __init__(self):
         self.board = []
-        self.player1_pieces_total = self.player2_pieces_total = 12
+        self.checkers = [0,12,12]
+        self.kings = [0,0,0]
         self.rows = self.columns = 8
         self.complete = False
+        self.winner = 0
 
         for row in range(self.rows):
             self.board.append([])
@@ -20,7 +22,6 @@ class Board:
                 else:
                     self.board[row].append(0)
 
-    
     def get_checker(self, row, col):
         return self.board[row][col]
 
@@ -31,26 +32,38 @@ class Board:
         # If we moved to a top or bottom row then make the checker a king
         if row == self.rows - 1 or row == 0:
             checker.make_king()
+            self.kings[checker.player_number] += 1
+            # print("New eval: " + str(self.evaluate()))
 
-    def remove(self, checkers):
+    def remove(self, checkers: Checker):
         if not checkers:
             return
         
         for checker in checkers:
             self.board[checker.row][checker.col] = 0
             if checker != 0:
-                if checker.player_number == 1:
-                    self.player1_pieces_total -= 1
-                else:
-                    self.player2_pieces_total -= 1
+                self.checkers[checker.player_number] -= 1
 
-        winner = 0
-        if(self.player1_pieces_total <= 0):
-            winner = 1
+        # todo - we also need to check if there are no valid moves
+        if(self.checkers[1] <= 0):
+            self.winner = 2
 
-        if(self.player2_pieces_total <= 0):
-            winner = 2
+        if(self.checkers[2] <= 0):
+            self.winner = 1
 
-        if(winner != 0):
-            print("Congrats Player " + str(winner) + " you have won the game!")
+        if(self.winner != 0):
+            print("Congrats Player " + str(self.winner) + " you have won the game!")
             self.complete = True
+
+        # print("New eval: " + str(self.evaluate()))
+
+    def evaluate(self):
+        return self.checkers[1] - self.checkers[2] + (self.kings[1] * 0.5 - self.kings[2] * 0.5)
+    
+    def get_all_checkers(self, player_number):
+        checkers = []
+        for row in self.board:
+            for checker in row:
+                if checker != 0 and checker.player_number == player_number:
+                    checkers.append(checker)
+        return checkers
