@@ -33,6 +33,7 @@ class Game:
             self.current_player = self.player1
         else:
             self.current_player = self.player2
+            return
 
         checker: Checker = self.board.get_checker(row, col)
         if(checker == 0 or checker.player_number == self.turn):
@@ -41,9 +42,10 @@ class Game:
     def move(self, checker: Checker, row: int, col: int):
         # update the board
         self.board.move(checker, row, col)
-
-        # update the checker
-        checker.move(row, col)
-
+        
         # once a move is made it changes turns
+        self.change_turn()
+
+    def ai_move(self, board):
+        self.board = board
         self.change_turn()

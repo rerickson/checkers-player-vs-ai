@@ -30,7 +30,7 @@ class UI:
         self.draw_squares()
         self.draw_checkers()
         if(self.game.current_player != None and self.game.current_player.selected != None):
-            valid_moves = self.game.current_player.get_valid_moves(self.game.current_player.selected)
+            valid_moves = self.board.get_valid_moves(self.game.current_player.selected)
             self.draw_valid_moves(valid_moves)
             self.draw_selected(self.game.current_player.selected)
 
