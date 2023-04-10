@@ -1,11 +1,9 @@
 from __future__ import annotations
 from copy import deepcopy
-# import pygame
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from board import Board
-    # from game import Game
     from checker import Checker
     
 
