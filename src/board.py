@@ -1,5 +1,7 @@
-from checker import Checker
+from __future__ import annotations
 from typing import List
+
+from checker import Checker
 
 class Board:
     def __init__(self):

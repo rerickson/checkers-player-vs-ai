@@ -1,13 +1,7 @@
-# import os
-# import sys
 import unittest
 import sys
 sys.path.append("..")
 
-# sys.path.append(os.path.abspath('../src'))
-
-# import src
-# from src.checker import Checker
 from src.checker import Checker
 
 class TestChecker(unittest.TestCase):
